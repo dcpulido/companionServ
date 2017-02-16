@@ -1,11 +1,27 @@
 import sqlite3 as lite
 
+#PHASE1 classes and sqlite CRUD FOR ALL!
+#PHASE2 Logics
+#PHASE3 FLASK
+
+
+
 #	TODO
 #	----NEW BOX 
 #	----DELETE BOX
-#	UPDATE BOX
+#	----UPDATE BOX
 #	----READ BOX
 #	----select Box
+#	->class travel
+#	new travel
+#	read total travels
+#	read travels of box
+#	read travels of many boxes
+#
+
+
+#
+# BOX
 #
 class Box:
 	def __init__(self,name,car,drives,travels,travelCost):
@@ -33,6 +49,10 @@ class Box:
 		return '{name:'+self.name+',car:'+self.car+',drives:'+str(self.drives)+',travels:'+str(self.travels)+',travelCost:'+str(self.travelCost)+'}'
 	def set_id(self,id):
 		self.id=id
+	def new_travel(self,isDriver):
+		if isDriver:self.drives=self.drives+1
+		self.travels=self.travels+1
+		self.update_db()
 	def save_on_db(self):
 		try:
 			con = lite.connect('test.db')
@@ -60,6 +80,29 @@ class Box:
 		    if con:
 		        con.close()
 
+	def update_db(self):
+		print "update"
+		try:
+			con = lite.connect('test.db')
+			cur = con.cursor()  
+			print self.id
+			cur.execute("UPDATE Box SET drives=? WHERE Id=?", (self.drives, self.id))
+			cur.execute("UPDATE Box SET travels=? WHERE Id=?", (self.travels, self.id)) 
+			con.commit()
+		except lite.Error, e:
+		    print "Error %s:" % e.args[0]
+		    sys.exit(1)
+		finally:
+		    if con:
+		        con.close()
+
+#
+# TRAVEL
+#
+class Travel:
+	def __init__(self):
+		pass
+
 #
 #		GLOBALS
 #
@@ -85,11 +128,9 @@ def get_Tha_Boxes():
 	    if con:
 	        con.close()
 
-def update_bd():
-	pass
 
 #
-#	MAIN
+#	MAIN (ONLY for DEBUGING now)
 #
 #
 if __name__=="__main__":
@@ -101,11 +142,12 @@ if __name__=="__main__":
 	fl=True
 
 	while fl==True:
-		if thaBox!=None:print "SELECT "+thaBox.get_name()
+		if thaBox!=None:print "SELECT "+thaBox.get_json()
 		print "1->Select Box"
 		print "2->Delete selected Box"
 		print "3->Refresh rtam"
 		print "4->New Box"
+		print "5->New travel"
 		print "q->quit"
 		op=raw_input('Enter op:')
 
@@ -124,6 +166,8 @@ if __name__=="__main__":
 		if op=='3':
 			Boxes=[]
 			Boxes=get_Tha_Boxes()
+		if op=='5':
+			thaBox.new_travel(True)
 
 		if op=='q':
 			fl=False

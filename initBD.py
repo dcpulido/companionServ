@@ -9,6 +9,7 @@ if __name__=="__main__":
 	    cur = con.cursor()    
 	    cur.execute('SELECT SQLITE_VERSION()')
 	    cur.execute("CREATE TABLE Box(Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, car TEXT, drives INT,travels INT,travelCost INT)")
+	    cur.execute("CREATE TABLE Travel(Id INTEGER PRIMARY KEY AUTOINCREMENT, Driver TEXT, Companions TEXT, Date INT)")
                  
 	    
 	except lite.Error, e:
