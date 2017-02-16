@@ -12,8 +12,9 @@ import sqlite3 as lite
 #	----UPDATE BOX
 #	----READ BOX
 #	----select Box
-#	->class travel
-#	new travel
+#	---- TEST BOXES
+#	->class travel (date) continue on HERE
+#	new travel 
 #	read total travels
 #	read travels of box
 #	read travels of many boxes
@@ -49,6 +50,8 @@ class Box:
 		return '{name:'+self.name+',car:'+self.car+',drives:'+str(self.drives)+',travels:'+str(self.travels)+',travelCost:'+str(self.travelCost)+'}'
 	def set_id(self,id):
 		self.id=id
+	def get_id(self):
+		return self.id
 	def new_travel(self,isDriver):
 		if isDriver:self.drives=self.drives+1
 		self.travels=self.travels+1
@@ -100,8 +103,32 @@ class Box:
 # TRAVEL
 #
 class Travel:
-	def __init__(self):
-		pass
+	def __init__(self,driver,companions,fromDB):
+		self.driver=driver
+		if fromDB: 
+			self.companionsBoxes=self.get_comp_from_db(companions)
+			self.companions=companions
+		else:
+			self.companionsBoxes=companions
+			self.companions=self.companions_ids()
+	def get_driver(self):
+		return self.driver
+	def get_companions(self):
+		return self.companions
+	def companions_ids(self):
+		strt=''
+		for c in self.companionsBoxes:
+			strt+=c.get_id()+"/"
+		print strt
+		return strt
+	def get_comp_from_db(self,companions):
+		#CONTINUE HERE
+		for b in Boxes:
+			pass
+
+
+	def get_json(self):
+		return '{name:'+self.driver+',car:'+self.companions_ids()+'}'
 
 #
 #		GLOBALS
