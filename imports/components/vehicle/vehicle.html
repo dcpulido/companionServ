@@ -1,0 +1,38 @@
+<header>
+  <h1>VEHICLE</h1>
+    
+    <form class="new-task" >
+        <input ng-model="$ctrl.newPerson" type="text" name="text" placeholder="Type to add new Partner"/>
+        <input ng-model="$ctrl.newCar" type="text" name="text" placeholder="Type to add his car"/>
+        {{ ctrl.newPerson }}
+        <button class="btn btn-success" ng-click="$ctrl.addPerson($ctrl.newPerson,$ctrl.newCar)">Guardar!</button>
+    </form>
+</header>
+ 
+<ul>
+  <li ng-repeat="person in $ctrl.persons" ng-class="{'checked': person.checked}">
+    <button class="delete" ng-click="$ctrl.removePerson(person)">&times;</button>
+    <input type="checkbox" ng-checked="task.checked" ng-click="$ctrl.setChecked(person)" class="toggle-checked"/>
+    <span class="text">
+      {{person.name}}   {{person.car}}
+    </span>
+  </li>
+    <br>
+</ul>
+<button class="btn btn-success" ng-click="$ctrl.addTravel()">new travel!</button>
+<ul>
+    <li ng-repeat="travel in $ctrl.travels">
+    <button class="delete" ng-click="$ctrl.removeTravel(travel)">&times;</button>
+    <span class="text">
+        <div id="driver">
+            <label>Driver {{travel.driver.name}}</label>
+            <label>Car {{travel.driver.car}}</label>
+        </div>
+        <div id="passengers" ng-repeat="pas in travel.passengers">
+            {{pas.name}}
+        </div>
+       
+    </span>
+    
+  </li>
+</ul>
