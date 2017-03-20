@@ -1,32 +1,44 @@
+
 <header>
-  <h1>VEHICLE</h1>
-    
+  <h1>COMp</h1>
+      
     <form class="new-task" >
+        <label>add new comp</label>
         <input ng-model="$ctrl.newPerson" type="text" name="text" placeholder="Type to add new Partner"/>
         <input ng-model="$ctrl.newCar" type="text" name="text" placeholder="Type to add his car"/>
         {{ ctrl.newPerson }}
-        <button class="btn btn-success" ng-click="$ctrl.addPerson($ctrl.newPerson,$ctrl.newCar)">Guardar!</button>
+        <button class="btn btn-evento" ng-click="$ctrl.addPerson($ctrl.newPerson,$ctrl.newCar)">Guardar!</button>
     </form>
 </header>
  
 <ul>
   <li ng-repeat="person in $ctrl.persons" ng-class="{'checked': person.checked}">
-    <button class="delete" ng-click="$ctrl.removePerson(person)">&times;</button>
-    <input type="checkbox" ng-checked="task.checked" ng-click="$ctrl.setChecked(person)" class="toggle-checked"/>
+    <input type="checkbox" ng-checked="person.checked" ng-click="$ctrl.setChecked(person)" class="toggle-checked"/>
+      <button class="btn btn-success" ng-click="$ctrl.setAsDriver(person)">Driver</button>
     <span class="text">
-      {{person.name}}   {{person.car}}
+      {{person.name}}   {{person.car}} 
     </span>
+      <button class="delete" ng-click="$ctrl.removePerson(person)">&times;</button>
   </li>
     <br>
 </ul>
-<button class="btn btn-success" ng-click="$ctrl.addTravel()">new travel!</button>
+<button class="btn btn-evento" ng-click="$ctrl.addTravel()">new travel!</button>
+<div ng-bind-html="driv"></div>
+<br>
+<div ng-bind-html="response"></div>
+<br>
+<button class='btn btn-evento' ng-click="$ctrl.saveTravel()">Guardar!</button>
+
+
+
 <ul>
-    <li ng-repeat="travel in $ctrl.travels">
+    <li ng-repeat="travel in $ctrl.travels|limitTo:5">
     <button class="delete" ng-click="$ctrl.removeTravel(travel)">&times;</button>
     <span class="text">
         <div id="driver">
-            <label>Driver {{travel.driver.name}}</label>
-            <label>Car {{travel.driver.car}}</label>
+            <label><b>Driver</b>  {{travel.driver.name}}  //</label>
+            <label><b>Car</b> {{travel.driver.car}}  //</label>
+            <label><b>Date</b> {{travel.createdAt}}</label>
         </div>
         <div id="passengers" ng-repeat="pas in travel.passengers">
             {{pas.name}}
@@ -36,3 +48,5 @@
     
   </li>
 </ul>
+
+<script src="lib/angular/angular-sanitize.min.js"></script>
